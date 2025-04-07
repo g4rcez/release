@@ -3,11 +3,12 @@ import { isAbsolute, join, resolve } from "jsr:@std/path";
 import { CliCommand } from "../cli/cli.ts";
 import { ReleaseExistsError } from "../errors/release-exist.ts";
 import { Git } from "../lib/git.ts";
+import { GithubCli } from "../lib/github-cli.ts";
 import { getCwd } from "../lib/os.ts";
 
 const writeFile = (file: string, content: string) => Deno.writeTextFile(file, content + "\n", { append: true, create: true });
 
-export const releaseCommand: CliCommand<{ cwd: string; changelog: string }> = async (args) => {
+export const releaseCommand: CliCommand<{ cwd: string; changelog: string; publish: boolean }> = async (args) => {
   const cwd = getCwd(args.cwd);
   const c = args.changelog || "";
   const file = isAbsolute(c) ? c : resolve(join(cwd, c));
@@ -44,6 +45,10 @@ export const releaseCommand: CliCommand<{ cwd: string; changelog: string }> = as
     if (i !== last) {
       await writeFile(file, "\n--\n");
     }
+  }
+  if (args.publish) {
+    const gh = new GithubCli(cwd);
+    await gh.release(current, file);
   }
   console.log(`[${new Date().toISOString()}]The file has been released.`);
 };

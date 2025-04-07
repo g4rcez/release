@@ -1,4 +1,6 @@
 import { parseArgs } from "@std/cli/parse-args";
+import { CommandNotFound } from "../errors/command-not-found.ts";
+import { css, ErrorFormatter } from "../errors/error-formatter.ts";
 
 type DefaultParsedArgs = { _: string[] };
 
@@ -25,31 +27,77 @@ type MappedPrimitives = {
 };
 
 type NeedDefaultValue<T extends string> = T extends `${string}[${infer Defaults}]${string}`
-  ? Defaults extends keyof MappedPrimitives ? MappedPrimitives[Defaults] : never
-  : null;
-
-type ParsedArgs<T> = { arg: string; default: T; applyDefaults: boolean };
+  ? Defaults extends keyof MappedPrimitives ? MappedPrimitives[Defaults] : "_"
+  : "_";
 
 const hasOptional = /\[\w+]/g;
 
 type Command<T extends CliArgs> = {
   name: string;
   fn: CliCommand<T>;
-  opts?: { help: string };
+  opts?: { description: string };
 };
 
-export class Cli<OwnArgs extends CliArgs, OwnCommands extends Record<string, Command<OwnArgs>>> {
-  private args: ParsedArgs<any>[] = [];
-  private commands: Command<OwnArgs>[] = [];
+const regex = /(<\w+>|\[\w+])/g;
 
-  public constructor(public readonly name: string, public readonly version?: string) {
+const isStringParam = (s: string) => regex.test(s);
+
+type CommonCommandOpts = Partial<{ description: string }>;
+
+type CommandOpts<T, Optional extends boolean> =
+  & CommonCommandOpts
+  & (Optional extends true ? { default?: any }
+    : { default: T });
+
+type ParsedArgs<T> = { arg: string; default: T; applyDefaults: boolean } & CommonCommandOpts;
+
+const getLongParser = (text: string) => text.split("|")[0]?.replace(/^--/g, "");
+
+export class Cli<OwnArgs extends CliArgs, OwnCommands extends Record<string, Command<OwnArgs>>> {
+  private options: ParsedArgs<any>[] = [];
+  private commands: Command<OwnArgs>[] = [];
+  private _version: string;
+  private _name: string;
+  private _description: string;
+
+  public get description(): string {
+    return this._description;
   }
 
-  public arg<S extends `--${string}|${string}${"" | ` [${keyof MappedPrimitives}]` | ` <${keyof MappedPrimitives}>`}`>(
+  public set description(value: string) {
+    this._description = value;
+  }
+
+  public get name(): string {
+    return this._name;
+  }
+
+  public set name(value: string) {
+    this._name = value;
+  }
+
+  public get version() {
+    return this._version;
+  }
+
+  public set version(v: string) {
+    this._version = v;
+  }
+
+  public constructor(name: string, version?: string, description?: string) {
+    this._name = name;
+    this._version = version ?? "";
+    this._description = description ?? "";
+  }
+
+  public option<
+    S extends `--${string}|${string}${"" | ` [${keyof MappedPrimitives}]` | ` <${keyof MappedPrimitives}>`}`,
+    D extends NeedDefaultValue<S>,
+  >(
     string: S,
-    opts: { default: NeedDefaultValue<S> },
+    opts?: CommandOpts<D, D extends "_" ? true : false>,
   ): Cli<OwnArgs & { [key in Arg<S>]: NeedDefaultValue<S> }, OwnCommands> {
-    this.args.push({ arg: string, default: opts.default, applyDefaults: hasOptional.test(string) });
+    this.options.push({ ...opts, arg: string, default: opts?.default, applyDefaults: hasOptional.test(string) });
     return this as any;
   }
 
@@ -66,22 +114,21 @@ export class Cli<OwnArgs extends CliArgs, OwnCommands extends Record<string, Com
     args: OwnArgs & DefaultParsedArgs;
     command?: Command<OwnArgs>;
   }> {
-    const getLongParser = (text: string) => text.split("|")[0]?.replace(/^--/g, "");
-    const strings = this.args.reduce<string[]>((acc, x) => {
-      if (x.arg.includes("[") || x.arg.includes("<")) return [...acc, getLongParser(x.arg)];
+    const strings = this.options.reduce<string[]>((acc, x) => {
+      if (isStringParam(x.arg)) return [...acc, getLongParser(x.arg)];
       return acc;
     }, []);
     const x = parseArgs(args, {
       string: strings,
-      boolean: this.args.reduce<string[]>((acc, x) => {
-        if (x.arg.includes("[") || x.arg.includes("<")) return acc;
+      boolean: this.options.reduce<string[]>((acc, x) => {
+        if (isStringParam(x.arg)) return acc;
         return [...acc, getLongParser(x.arg)];
       }, []),
-      default: this.args.reduce((acc, el) => {
+      default: this.options.reduce((acc, el) => {
         const key = getLongParser(el.arg);
         return el.applyDefaults ? { ...acc, [key]: el.default } : acc;
       }, {}),
-      alias: this.args.reduce((acc, el) => {
+      alias: this.options.reduce((acc, el) => {
         const key = getLongParser(el.arg);
         const alias = el.arg.split("|")[1].split(" ")[0].replace(/^-/g, "");
         return { ...acc, [key]: [alias] };
@@ -92,7 +139,7 @@ export class Cli<OwnArgs extends CliArgs, OwnCommands extends Record<string, Com
     }
     const command = this.commands.find((x) => x.name === args[0]);
     if (command === undefined) {
-      throw new Error(`Command ${command} not found!`);
+      throw new CommandNotFound();
     }
     return {
       command,
@@ -112,5 +159,29 @@ export class Cli<OwnArgs extends CliArgs, OwnCommands extends Record<string, Com
       }
     }
     return false;
+  }
+
+  private spaces = (" ").repeat(2);
+
+  public help(error: any) {
+    console.log(`%c\r${this.description}`, css`color: blue`);
+    console.log(
+      `\r\nUsage: ${this.name}${this.commands.length === 0 ? "" : " <command>"}${this.options.length === 0 ? "" : " [options]"}`,
+    );
+    if (this.commands.length > 0) {
+      console.log("\r\n%cCommands", css`text-decoration: underline;font-weight: bold`);
+      this.commands.toSorted((a, b) => a.name.localeCompare(b.name)).forEach((x) => {
+        console.log(`\r${this.spaces}${x.name}: ${x.opts?.description || "-"}`);
+      });
+    }
+    if (this.options.length > 0) {
+      console.log("\r\n%cOptions", css`text-decoration: underline;font-weight: bold`);
+      this.options.toSorted((a, b) => a.arg.localeCompare(b.arg)).forEach((x) => {
+        const [first, rest] = x.arg.split("|");
+        console.log(`\r${this.spaces}${first}, ${rest.split(" ")[0]}: ${x.description || "-"}`);
+      });
+    }
+    console.log("");
+    if (error instanceof ErrorFormatter) error.log();
   }
 }
