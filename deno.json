@@ -1,0 +1,17 @@
+{
+  "tasks": {
+    "build": "deno compile -R -W --allow-run -o bin/release src/main.ts"
+  },
+  "imports": {
+    "@std/assert": "jsr:@std/assert@1",
+    "@std/cli": "jsr:@std/cli@^1.0.15",
+    "@std/fs": "jsr:@std/fs@1.0.15",
+    "@std/path": "jsr:@std/path@1.0.8",
+    "@std/semver": "jsr:@std/semver@1.0.4"
+  },
+  "fmt": {
+    "useTabs": false,
+    "proseWrap": "always",
+    "lineWidth": 150
+  }
+}
