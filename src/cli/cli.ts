@@ -183,5 +183,6 @@ export class Cli<OwnArgs extends CliArgs, OwnCommands extends Record<string, Com
     }
     console.log("");
     if (error instanceof ErrorFormatter) error.log();
+    if (error instanceof Error) console.error(error);
   }
 }
