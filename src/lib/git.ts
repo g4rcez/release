@@ -70,7 +70,7 @@ export class Git {
 
   public async push(origin: string, remote: string) {
     try {
-      const result = await run(this.cwd, ["git", "push", origin, remote]);
+      const result = await run(this.cwd, ["git", "push", origin, remote].filter(Boolean));
       return result;
     } catch (error) {
       console.error(error);

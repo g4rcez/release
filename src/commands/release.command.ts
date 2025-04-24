@@ -53,8 +53,11 @@ export const releaseCommand: CliCommand<{ cwd: string; changelog: string; publis
     const git = new Git(cwd);
     await git.add(".");
     await git.createCommit("-m", "docs: CHANGELOG");
+    await git.push("origin", "");
+    console.log("docs: CHANGELOG was pushed");
     const gh = new GithubCli(cwd);
     await gh.release(current, file);
+    console.log(`Git tag ${current} was released.`);
   }
   console.log(`[${new Date().toISOString()}]The file has been released.`);
 };
