@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
   "tasks": {
     "build": "deno compile -R -W --allow-run -o bin/release src/main.ts"
   },

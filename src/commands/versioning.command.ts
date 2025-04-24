@@ -6,10 +6,10 @@ import { getCwd } from "../lib/os.ts";
 import { Strings } from "../lib/strings.ts";
 
 const semver: ReleaseType[] = [
+  "pre",
   "major",
   "minor",
   "patch",
-  "pre",
   "premajor",
   "preminor",
   "prepatch",
@@ -54,9 +54,10 @@ export const semverCommand: CliCommand<{ increment: ReleaseType; git: boolean; c
       console.log(`${x}:`, newTag);
     });
   }
-  const newTagVersion = format(increment(t, args.increment));
+  const newTagVersion = `v${format(increment(t, args.increment))}`;
   if (args.git) {
     return await pushTag(newTagVersion, args.cwd);
   }
   console.log(`\r${newTagVersion}`);
 };
+

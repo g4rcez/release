@@ -60,6 +60,10 @@ export class Git {
     }
   }
 
+  public async add(...args: string[]) {
+    await run(this.cwd, ["git", "add", ...args]);
+  }
+
   public commit(commit: string) {
     return new Commit(commit, this.cwd);
   }
@@ -69,6 +73,7 @@ export class Git {
       const result = await run(this.cwd, ["git", "push", origin, remote]);
       return result;
     } catch (error) {
+      console.error(error);
       return null;
     }
   }
@@ -78,6 +83,7 @@ export class Git {
       const result = await run(this.cwd, ["git", "tag", tag]);
       return result;
     } catch (error) {
+      console.error(error);
       return null;
     }
   }
@@ -91,7 +97,12 @@ export class Git {
       ]);
       return result !== "";
     } catch (error) {
+      console.error(error);
       return true;
     }
+  }
+
+  public async createCommit(...args: string[]) {
+    await run(this.cwd, ["git", "commit", ...args]);
   }
 }

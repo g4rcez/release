@@ -18,17 +18,19 @@ export const releaseCommand: CliCommand<{ cwd: string; changelog: string; publis
   const author = await git.getConfigAuthor();
 
   const existFile = await exists(file);
-  const hasCurrentRelease = existFile ? (await Deno.readTextFile(file)).includes(`# ${current}`) : false;
+  const changelogFileContent = await Deno.readTextFile(file);
+  const hasCurrentRelease = existFile ? changelogFileContent.includes(`# ${current}`) : false;
 
   if (hasCurrentRelease) {
     return Promise.reject(new ReleaseExistsError(current));
   }
 
-  await writeFile(file, `# ${current}`);
-  await writeFile(file, "");
-  await writeFile(file, `Date: ${now}`);
-  await writeFile(file, `Author: ${author}`);
-  await writeFile(file, "");
+  const lines: string[] = [];
+  lines.push(`# ${current}`);
+  lines.push("");
+  lines.push(`Date: ${now}`);
+  lines.push(`Author: ${author}`);
+  lines.push("");
 
   const commits = await git.getCommits(previous, current);
   const last = commits.length - 1;
@@ -37,16 +39,20 @@ export const releaseCommand: CliCommand<{ cwd: string; changelog: string; publis
     const author = await commit.author();
     const message = await commit.message();
     const timestamps = await commit.timestamps();
-    await writeFile(file, `## ${commit.hash.slice(0, 6)}`);
-    await writeFile(file, `Date: ${timestamps}`);
-    await writeFile(file, `Author: @${author}`);
-    await writeFile(file, `Commit: ${commit.hash}`);
-    await writeFile(file, message);
+    lines.push(`## ${commit.hash.slice(0, 6)}`);
+    lines.push(`Date: ${timestamps}`);
+    lines.push(`Author: @${author}`);
+    lines.push(`Commit: ${commit.hash}`);
+    lines.push(message);
     if (i !== last) {
-      await writeFile(file, "\n--\n");
+      lines.push("\n--\n");
     }
   }
+  await writeFile(file, [...lines, changelogFileContent].join("\n"));
   if (args.publish) {
+    const git = new Git(cwd);
+    await git.add(".");
+    await git.createCommit("-m", "docs: CHANGELOG");
     const gh = new GithubCli(cwd);
     await gh.release(current, file);
   }

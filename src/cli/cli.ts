@@ -1,5 +1,4 @@
 import { parseArgs } from "@std/cli/parse-args";
-import { CommandNotFound } from "../errors/command-not-found.ts";
 import { css, ErrorFormatter } from "../errors/error-formatter.ts";
 
 type DefaultParsedArgs = { _: string[] };
@@ -17,8 +16,8 @@ export type CliCommand<T extends Params> = (
 ) => Promise<any> | any;
 
 type Arg<T extends string> = T extends `${infer Long}|${infer Short}` ? (Long extends `--${infer Name}` ? Name
-    : Short extends `-${infer SName}` ? SName
-    : never)
+  : Short extends `-${infer SName}` ? SName
+  : never)
   : never;
 
 type MappedPrimitives = {
@@ -30,7 +29,7 @@ type NeedDefaultValue<T extends string> = T extends `${string}[${infer Defaults}
   ? Defaults extends keyof MappedPrimitives ? MappedPrimitives[Defaults] : "_"
   : "_";
 
-const hasOptional = /\[\w+]/g;
+const hasOptional = /\[\w+]/;
 
 type Command<T extends CliArgs> = {
   name: string;
@@ -38,7 +37,7 @@ type Command<T extends CliArgs> = {
   opts?: { description: string };
 };
 
-const regex = /(<\w+>|\[\w+])/g;
+const regex = /(<\w+>|\[\w+])/;
 
 const isStringParam = (s: string) => regex.test(s);
 
@@ -46,12 +45,14 @@ type CommonCommandOpts = Partial<{ description: string }>;
 
 type CommandOpts<T, Optional extends boolean> =
   & CommonCommandOpts
-  & (Optional extends true ? { default?: any }
+  & (Optional extends true ? { default?: unknown }
     : { default: T });
 
 type ParsedArgs<T> = { arg: string; default: T; applyDefaults: boolean } & CommonCommandOpts;
 
-const getLongParser = (text: string) => text.split("|")[0]?.replace(/^--/g, "");
+const CMD_SEPARATOR = ",";
+
+const getLongParser = (text: string) => text.split(CMD_SEPARATOR)[0]?.replace(/^--/g, "");
 
 export class Cli<OwnArgs extends CliArgs, OwnCommands extends Record<string, Command<OwnArgs>>> {
   private options: ParsedArgs<any>[] = [];
@@ -91,7 +92,7 @@ export class Cli<OwnArgs extends CliArgs, OwnCommands extends Record<string, Com
   }
 
   public option<
-    S extends `--${string}|${string}${"" | ` [${keyof MappedPrimitives}]` | ` <${keyof MappedPrimitives}>`}`,
+    S extends `--${string},${string}${"" | ` [${keyof MappedPrimitives}]` | ` <${keyof MappedPrimitives}>`}`,
     D extends NeedDefaultValue<S>,
   >(
     string: S,
@@ -110,36 +111,33 @@ export class Cli<OwnArgs extends CliArgs, OwnCommands extends Record<string, Com
     return this as any;
   }
 
-  public parse(args: string[]): Pretty<{
+  public parse(argv: string[]): Pretty<{
     args: OwnArgs & DefaultParsedArgs;
     command?: Command<OwnArgs>;
   }> {
-    const strings = this.options.reduce<string[]>((acc, x) => {
-      if (isStringParam(x.arg)) return [...acc, getLongParser(x.arg)];
+    const types = this.options.reduce((acc, x) => {
+      const isString = isStringParam(x.arg);
+      if (isString) acc.strings.push(getLongParser(x.arg));
+      else acc.booleans.push(getLongParser(x.arg));
       return acc;
-    }, []);
-    const x = parseArgs(args, {
-      string: strings,
-      boolean: this.options.reduce<string[]>((acc, x) => {
-        if (isStringParam(x.arg)) return acc;
-        return [...acc, getLongParser(x.arg)];
-      }, []),
-      default: this.options.reduce((acc, el) => {
-        const key = getLongParser(el.arg);
-        return el.applyDefaults ? { ...acc, [key]: el.default } : acc;
-      }, {}),
-      alias: this.options.reduce((acc, el) => {
-        const key = getLongParser(el.arg);
-        const alias = el.arg.split("|")[1].split(" ")[0].replace(/^-/g, "");
-        return { ...acc, [key]: [alias] };
-      }, {}),
-    });
+    }, { strings: [] as string[], booleans: [] as string[] });
+    const defaults = this.options.reduce((acc, el) => {
+      const key = getLongParser(el.arg);
+      return el.applyDefaults ? { ...acc, [key]: el.default } : acc;
+    }, {});
+    const aliases = this.options.reduce((acc, el) => {
+      const key = getLongParser(el.arg);
+      const alias = el.arg.split(CMD_SEPARATOR)[1].split(" ")[0].replace(/^-/g, "");
+      return { ...acc, [key]: [alias] };
+    }, {});
+    const x = parseArgs(argv, { string: types.strings, boolean: types.booleans, default: defaults, alias: aliases });
     if (this.commands.length === 0) {
       return { command: undefined, args: x as any };
     }
-    const command = this.commands.find((x) => x.name === args[0]);
+    const command = this.commands.find((x) => x.name === argv[0]);
     if (command === undefined) {
-      throw new CommandNotFound();
+      this.help()
+      return { command: undefined, args: {} as any }
     }
     return {
       command,
@@ -163,7 +161,7 @@ export class Cli<OwnArgs extends CliArgs, OwnCommands extends Record<string, Com
 
   private spaces = (" ").repeat(2);
 
-  public help(error: any) {
+  public help(error?: unknown) {
     console.log(`%c\r${this.description}`, css`color: blue`);
     console.log(
       `\r\nUsage: ${this.name}${this.commands.length === 0 ? "" : " <command>"}${this.options.length === 0 ? "" : " [options]"}`,
@@ -177,7 +175,7 @@ export class Cli<OwnArgs extends CliArgs, OwnCommands extends Record<string, Com
     if (this.options.length > 0) {
       console.log("\r\n%cOptions", css`text-decoration: underline;font-weight: bold`);
       this.options.toSorted((a, b) => a.arg.localeCompare(b.arg)).forEach((x) => {
-        const [first, rest] = x.arg.split("|");
+        const [first, rest] = x.arg.split(CMD_SEPARATOR);
         console.log(`\r${this.spaces}${first}, ${rest.split(" ")[0]}: ${x.description || "-"}`);
       });
     }
