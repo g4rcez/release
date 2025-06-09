@@ -1,11 +1,10 @@
 import { exists } from "jsr:@std/fs";
 import { basename, isAbsolute, join, resolve } from "jsr:@std/path";
 import { CliCommand } from "../cli/cli.ts";
-import { ReleaseExistsError } from "../errors/release-exist.ts";
 import { Git } from "../lib/git.ts";
 import { GithubCli } from "../lib/github-cli.ts";
 import { getCwd } from "../lib/os.ts";
-import { fetchGitDateTag, gitDateCommand } from "./versioning.command.ts";
+import { fetchGitDateTag } from "./versioning.command.ts";
 
 const writeFile = (file: string, content: string) =>
   Deno.writeTextFile(file, content + "\n", { append: true, create: true });
@@ -24,7 +23,7 @@ export const releaseCommand: CliCommand<{
 
   const existFile = await exists(file);
   if (!existFile) {
-    throw new Error("Changelog not exists")
+    throw new Error("Changelog not exists");
   }
   const changelogFileContent = await Deno.readTextFile(file);
 
@@ -42,6 +41,8 @@ export const releaseCommand: CliCommand<{
   lines.push(`Date: ${now.toISOString()}`);
   lines.push(`Author: ${author}`);
   lines.push("");
+
+  const releaseFileContent = lines.join("\n");
 
   const commits = await git.getCommits(previous, current);
   for (let i = 0; i < commits.length; i += 1) {
@@ -63,7 +64,9 @@ export const releaseCommand: CliCommand<{
     await git.push("origin", "");
     console.log("docs: CHANGELOG was pushed");
     const gh = new GithubCli(cwd);
-    await gh.release(current, file);
+    const tempFile = await Deno.makeTempFile();
+    await writeFile(tempFile, releaseFileContent);
+    await gh.release(current, tempFile);
     console.log(`Git tag ${current} was released.`);
   }
   console.log(

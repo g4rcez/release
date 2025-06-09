@@ -8,6 +8,10 @@ async function main() {
     "v0.0.0",
     "ReleaseCLI: release process simplified!",
   )
+    .option("--changelog,-c [string]", {
+      default: "CHANGELOG",
+      description: "Path to changelog file",
+    })
     .option("--increment,-i [string]", {
       default: "",
       description: "Increment semver tag using the release types",
