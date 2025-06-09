@@ -8,3 +8,14 @@ Date: 2025-04-23T23:42:28-03:00
 Author: @g4rcez
 Commit: 1e13fea4dc6e5736cbdfef157a9190d3a00d003f
 feat: add+commit changelog before push tag
+
+# v0.1.1
+
+Date: Wed Apr 23 2025 23:47:46 GMT-0300 (Brasilia Standard Time)
+Author: g4rcez
+
+## c44784
+Date: 2025-04-23T23:47:28-03:00
+Author: @g4rcez
+Commit: c44784207d5cd9f0b64e76be211af7f2f3cf7a13
+feat: add commit logs

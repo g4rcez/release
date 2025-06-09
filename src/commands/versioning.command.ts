@@ -27,10 +27,24 @@ const pushTag = async (newTagVersion: string, cwd: string) => {
     throw new Error(`Tag ${newTagVersion} already exists`);
   }
   await git.push("origin", newTagVersion);
-  console.log(`[${new Date().toISOString()}] ${newTagVersion} was pushed to remote!`);
+  console.log(
+    `[${new Date().toISOString()}] ${newTagVersion} was pushed to remote!`,
+  );
 };
 
-export const gitDateCommand: CliCommand<{ git: boolean; cwd: string; length: number }> = async (args) => {
+export const fetchGitDateTag = async (cwd: string, len: number) => {
+  const now = new Date();
+  const git = new Git(getCwd(cwd));
+  const [lastCommit] = await git.lastCommit();
+  const tag = `${now.getFullYear()}.${Strings.padDate(now.getMonth() + 1)}.${Strings.padDate(now.getDate())}.${lastCommit.slice(0, len)}`;
+  return { tag, create: async () => await pushTag(tag, cwd) };
+};
+
+export const gitDateCommand: CliCommand<{
+  git: boolean;
+  cwd: string;
+  length: number;
+}> = async (args) => {
   const now = new Date();
   const git = new Git(getCwd(args.cwd));
   const [lastCommit] = await git.lastCommit();
@@ -42,13 +56,17 @@ export const gitDateCommand: CliCommand<{ git: boolean; cwd: string; length: num
   console.log(`\r${tag}`);
 };
 
-export const semverCommand: CliCommand<{ increment: ReleaseType; git: boolean; cwd: string }> = async (args) => {
+export const semverCommand: CliCommand<{
+  increment: ReleaseType;
+  git: boolean;
+  cwd: string;
+}> = async (args) => {
   const version = args._[0];
   if (!canParse(version)) {
     throw new Error(`${version} is invalid semver version`);
   }
   const t = parse(version);
-  if (!(args.increment)) {
+  if (!args.increment) {
     return semver.forEach((x) => {
       const newTag = format(increment(t, x));
       console.log(`${x}:`, newTag);
@@ -60,4 +78,3 @@ export const semverCommand: CliCommand<{ increment: ReleaseType; git: boolean; c
   }
   console.log(`\r${newTagVersion}`);
 };
-
