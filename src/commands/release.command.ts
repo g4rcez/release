@@ -50,6 +50,7 @@ export const releaseCommand: CliCommand<{
 
   const commits = await git.getCommits(beforeChangelog, previous);
   console.log({ beforeChangelog, previous });
+  console.log(commits);
   for (let i = 0; i < commits.length; i += 1) {
     const commit = git.commit(commits[i]);
     console.log(commits[i], commit);
