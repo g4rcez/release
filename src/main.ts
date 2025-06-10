@@ -17,11 +17,11 @@ async function main() {
       description: "Increment semver tag using the release types",
     })
     .option("--length,-l [number]", {
-      description: "Length of hash commit",
+      description: "Length of hash commit. Default: 7",
       default: 7,
     })
     .option("--with,-w [string]", {
-      description: "Tag versioning: gitdate|semver",
+      description: "Tag versioning: gitdate|semver. Default: gitdate",
       default: "gitdate",
     })
     .command("new", releaseCommand, {

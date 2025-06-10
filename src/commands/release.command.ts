@@ -67,19 +67,14 @@ export const releaseCommand: CliCommand<{
     CHANGELOG,
     [...lines, "\n--\n", changelogFileContent].join("\n"),
   );
-  if (args.publish) {
-    const git = new Git(cwd);
-    await git.add(".");
-    await git.createCommit("-m", "docs: CHANGELOG");
-    await git.push("origin", "");
-    console.log("docs: CHANGELOG was pushed");
-    const gh = new GithubCli(cwd);
-    const tempFile = await Deno.makeTempFile();
-    await writeFile(tempFile, releaseFileContent);
-    await gh.release(release.tag, tempFile);
-    console.log(`Git tag ${release.tag} was released.`);
-  }
-  console.log(
-    `[${new Date().toISOString()}]The changelog ${basename(CHANGELOG)} has been released.`,
-  );
+  await git.add(".");
+  const changelogCommit = `docs(${release.tag}): CHANGELOG`
+  await git.createCommit("-m", changelogCommit);
+  await git.push("origin", "");
+  console.log(changelogCommit);
+  const gh = new GithubCli(cwd);
+  const tempFile = await Deno.makeTempFile();
+  await writeFile(tempFile, releaseFileContent);
+  await gh.release(release.tag, tempFile);
+  console.log(`Git tag ${release.tag} was released.`);
 };

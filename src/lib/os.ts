@@ -1,7 +1,6 @@
 import { resolve } from "jsr:@std/path";
 
 export const run = async (cwd: string, command: string[]): Promise<string> => {
-  console.log(cwd, "->", ...command);
   const process = new Deno.Command(command[0], {
     cwd,
     stderr: "piped",
