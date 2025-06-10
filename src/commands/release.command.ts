@@ -46,9 +46,10 @@ export const releaseCommand: CliCommand<{
   const releaseFileContent = lines.join("\n");
   await release.create();
 
-  console.log({ previous, current: release.tag });
+  console.log({ beforeChangelog, previous, current: release.tag });
 
   const commits = await git.getCommits(beforeChangelog, previous);
+  console.log({ beforeChangelog, previous });
   for (let i = 0; i < commits.length; i += 1) {
     const commit = git.commit(commits[i]);
     const author = await commit.author();
