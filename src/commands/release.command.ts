@@ -52,13 +52,13 @@ export const releaseCommand: CliCommand<{
     const author = await commit.author();
     const message = await commit.message();
     const timestamps = await commit.timestamps();
+    lines.push("\n")
     lines.push(`## ${commit.hash.slice(0, 6)}`);
     lines.push(`Date: ${timestamps}`);
     lines.push(`Author: @${author}`);
     lines.push(`Commit: ${commit.hash}`);
     lines.push(message);
-    lines.push("")
-    lines.push("")
+    lines.push("\n\n")
   }
   await writeFile(
     CHANGELOG,
