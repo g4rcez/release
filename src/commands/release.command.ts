@@ -1,5 +1,5 @@
 import { exists } from "jsr:@std/fs";
-import { basename, isAbsolute, join, resolve } from "jsr:@std/path";
+import { isAbsolute, join, resolve } from "jsr:@std/path";
 import { CliCommand } from "../cli/cli.ts";
 import { Git } from "../lib/git.ts";
 import { GithubCli } from "../lib/github-cli.ts";
@@ -46,14 +46,9 @@ export const releaseCommand: CliCommand<{
   const releaseFileContent = lines.join("\n");
   await release.create();
 
-  console.log({ beforeChangelog, previous, current: release.tag });
-
   const commits = await git.getCommits(previous, beforeChangelog);
-  console.log({ beforeChangelog, previous });
-  console.log(commits);
   for (let i = 0; i < commits.length; i += 1) {
     const commit = git.commit(commits[i]);
-    console.log(commits[i], commit);
     const author = await commit.author();
     const message = await commit.message();
     const timestamps = await commit.timestamps();
@@ -62,6 +57,8 @@ export const releaseCommand: CliCommand<{
     lines.push(`Author: @${author}`);
     lines.push(`Commit: ${commit.hash}`);
     lines.push(message);
+    lines.push("")
+    lines.push("")
   }
   await writeFile(
     CHANGELOG,
