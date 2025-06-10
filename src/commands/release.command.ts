@@ -48,7 +48,7 @@ export const releaseCommand: CliCommand<{
 
   console.log({ beforeChangelog, previous, current: release.tag });
 
-  const commits = await git.getCommits(beforeChangelog, previous);
+  const commits = await git.getCommits(previous, beforeChangelog);
   console.log({ beforeChangelog, previous });
   console.log(commits);
   for (let i = 0; i < commits.length; i += 1) {
