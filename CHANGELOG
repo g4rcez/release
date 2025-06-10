@@ -111,3 +111,130 @@ Author: g4rcez
 
 
 
+# 2025.06.10.8f70862
+
+Date: 2025-06-10T13:00:37.718Z
+Author: g4rcez
+
+## c44784
+Date: 2025-04-23T23:47:28-03:00
+Author: @g4rcez
+Commit: c44784207d5cd9f0b64e76be211af7f2f3cf7a13
+feat: add commit logs
+
+--
+
+# 2025.06.10.dbc8d1c
+
+Date: 2025-06-10T12:26:57.272Z
+Author: g4rcez
+
+
+--
+
+
+# 2025.06.10.4b403c4
+
+Date: 2025-06-10T12:47:41.646Z
+Author: g4rcez
+
+## c44784
+Date: 2025-04-23T23:47:28-03:00
+Author: @g4rcez
+Commit: c44784207d5cd9f0b64e76be211af7f2f3cf7a13
+feat: add commit logs
+
+--
+
+# 2025.06.10.dbc8d1c
+
+Date: 2025-06-10T12:26:57.272Z
+Author: g4rcez
+
+
+--
+
+
+
+# 2025.06.10.53cc48b
+
+Date: 2025-06-10T12:59:55.259Z
+Author: g4rcez
+
+## 4b403c
+Date: 2025-06-10T09:44:56-03:00
+Author: @g4rcez
+Commit: 4b403c4dc46572a38f6fc7dad6fa237e9754e8bf
+fix: git history clean
+## 7c7b62
+Date: 2025-06-10T09:31:38-03:00
+Author: @g4rcez
+Commit: 7c7b62807edf567c166f09282a91791f246a3e7a
+fix: git history clean
+## a92733
+Date: 2025-06-10T09:31:07-03:00
+Author: @g4rcez
+Commit: a92733825413d6a860f0fa9ee0eb531541478a26
+fix: git history clean
+## 58931a
+Date: 2025-06-10T09:27:47-03:00
+Author: @g4rcez
+Commit: 58931a961325c9f9eb9dac7dd104bab283f7defb
+fix: git history clean
+## dbc8d1
+Date: 2025-06-10T09:26:54-03:00
+Author: @g4rcez
+Commit: dbc8d1c0cfcd6a2f8e62b5cff30b7243456a959f
+fix: git history clean
+## 704222
+Date: 2025-06-10T09:25:36-03:00
+Author: @g4rcez
+Commit: 704222571c79ab920073e0fec8654832cd4630ac
+feat(release): improve changelog generation and tag handling
+## 14a6cb
+Date: 2025-06-09T17:20:07-03:00
+Author: @g4rcez
+Commit: 14a6cb521a7bfb5889ab0073793de007182c4a6c
+refactor(release): improve release file handling and add changelog option
+## c7ba18
+Date: 2025-06-09T17:15:33-03:00
+Author: @g4rcez
+Commit: c7ba186d5f37a22d273336c2868e04eaff51ab2a
+refactor(release): restructure release command and add git date versioning
+
+--
+
+# 2025.06.10.dbc8d1c
+
+Date: 2025-06-10T12:26:57.272Z
+Author: g4rcez
+
+
+--
+
+
+# 2025.06.10.4b403c4
+
+Date: 2025-06-10T12:47:41.646Z
+Author: g4rcez
+
+## c44784
+Date: 2025-04-23T23:47:28-03:00
+Author: @g4rcez
+Commit: c44784207d5cd9f0b64e76be211af7f2f3cf7a13
+feat: add commit logs
+
+--
+
+# 2025.06.10.dbc8d1c
+
+Date: 2025-06-10T12:26:57.272Z
+Author: g4rcez
+
+
+--
+
+
+
+
+
