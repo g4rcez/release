@@ -56,25 +56,16 @@ export const gitDateCommand: CliCommand<{
   console.log(`\r${tag}`);
 };
 
-export const semverCommand: CliCommand<{
-  increment: ReleaseType;
-  git: boolean;
-  cwd: string;
-}> = async (args) => {
-  const version = args._[0];
-  if (!canParse(version)) {
-    throw new Error(`${version} is invalid semver version`);
+export const fetchSemverTag = async (
+  incrementType: ReleaseType,
+  cwd: string,
+) => {
+  const git = new Git(cwd);
+  const [latest] = await git.tags(1);
+  if (!canParse(latest)) {
+    throw new Error(`${latest} is invalid semver version`);
   }
-  const t = parse(version);
-  if (!args.increment) {
-    return semver.forEach((x) => {
-      const newTag = format(increment(t, x));
-      console.log(`${x}:`, newTag);
-    });
-  }
-  const newTagVersion = `v${format(increment(t, args.increment))}`;
-  if (args.git) {
-    return await pushTag(newTagVersion, args.cwd);
-  }
-  console.log(`\r${newTagVersion}`);
+  const t = parse(latest);
+  const tag = `v${format(increment(t, incrementType))}`;
+  return { tag, create: async () => await pushTag(tag, cwd) };
 };

@@ -4,15 +4,17 @@ import { CliCommand } from "../cli/cli.ts";
 import { Git } from "../lib/git.ts";
 import { GithubCli } from "../lib/github-cli.ts";
 import { getCwd } from "../lib/os.ts";
-import { fetchGitDateTag } from "./versioning.command.ts";
+import { fetchGitDateTag, fetchSemverTag } from "./versioning.command.ts";
 
-const writeFile = (file: string, content: string) => Deno.writeTextFile(file, content + "\n", { append: true, create: true });
+const writeFile = (file: string, content: string) =>
+  Deno.writeTextFile(file, content + "\n", { append: true, create: true });
 
 export const releaseCommand: CliCommand<{
   cwd: string;
   changelog: string;
   publish: boolean;
   with: string;
+  increment: string;
   length: number;
 }> = async (args) => {
   const cwd = getCwd(args.cwd);
@@ -34,7 +36,10 @@ export const releaseCommand: CliCommand<{
   const [latest] = await git.tags(1);
   console.log(`Latest tag: ${latest}`);
 
-  const release = await fetchGitDateTag(cwd, args.length);
+  const release =
+    args.with === "semver"
+      ? await fetchSemverTag(cwd, args.increment)
+      : await fetchGitDateTag(cwd, args.length);
 
   const lines: string[] = [];
   lines.push(`# ${release.tag}\n`);
@@ -46,7 +51,7 @@ export const releaseCommand: CliCommand<{
   await release.create();
 
   const commits = await git.getCommits(latest, release.tag);
-  console.log(`Getting commits...${latest}..${release.tag}`)
+  console.log(`Getting commits...${latest}..${release.tag}`);
   for (let i = 0; i < commits.length; i += 1) {
     const commit = git.commit(commits[i]);
     const author = await commit.author();
@@ -59,10 +64,7 @@ export const releaseCommand: CliCommand<{
     lines.push(message);
     lines.push("\n");
   }
-  await writeFile(
-    CHANGELOG,
-    [...lines, "--", changelogFileContent].join("\n"),
-  );
+  await writeFile(CHANGELOG, [...lines, "--", changelogFileContent].join("\n"));
   await git.add(".");
   const changelogCommit = `docs(${release.tag}): CHANGELOG`;
   await git.createCommit("-m", changelogCommit);

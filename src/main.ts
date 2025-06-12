@@ -13,7 +13,7 @@ async function main() {
       description: "Path to changelog file",
     })
     .option("--increment,-i [string]", {
-      default: "",
+      default: "patch",
       description: "Increment semver tag using the release types",
     })
     .option("--length,-l [number]", {
