@@ -37,8 +37,7 @@ export const releaseCommand: CliCommand<{
   const release = await fetchGitDateTag(cwd, args.length);
 
   const lines: string[] = [];
-  lines.push(`# ${release.tag}`);
-  lines.push("");
+  lines.push(`# ${release.tag}\n`);
   lines.push(`Date: ${now.toISOString()}`);
   lines.push(`Author: ${author}`);
   lines.push("");
@@ -58,7 +57,7 @@ export const releaseCommand: CliCommand<{
     lines.push(`Author: @${author}`);
     lines.push(`Commit: ${commit.hash}`);
     lines.push(message);
-    lines.push("\n\n")
+    lines.push("\n")
   }
   await writeFile(
     CHANGELOG,
@@ -74,4 +73,5 @@ export const releaseCommand: CliCommand<{
   await writeFile(tempFile, releaseFileContent);
   await gh.release(release.tag, tempFile);
   console.log(`Git tag ${release.tag} was released.`);
+  console.log(release.tag)
 };
