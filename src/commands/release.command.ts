@@ -52,13 +52,16 @@ export const releaseCommand: CliCommand<{
   await release.create();
 
   const commits = await git.getCommits(latest, release.tag);
-  console.log(`Getting commits...${latest}..${release.tag}`);
-  for (let i = 0; i < commits.length; i += 1) {
-    const commit = git.commit(commits[i]);
+  console.log(`From: ${latest} | To: ${release.tag}`);
+  const reverseCommits = commits.reverse();
+  for (let i = 0; i < reverseCommits.length; i += 1) {
+    const commit = git.commit(reverseCommits[i]);
+    const hash = commit.hash.slice(0, 7);
+    console.log(`Commit: ${hash}`);
     const author = await commit.author();
     const message = await commit.message();
     const timestamps = await commit.timestamps();
-    lines.push(`## ${commit.hash.slice(0, 6)}`);
+    lines.push(`## ${hash}`);
     lines.push(`Date: ${timestamps}`);
     lines.push(`Author: @${author}`);
     lines.push(`Commit: ${commit.hash}`);
