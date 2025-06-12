@@ -5,6 +5,7 @@ import { Git } from "../lib/git.ts";
 import { GithubCli } from "../lib/github-cli.ts";
 import { getCwd } from "../lib/os.ts";
 import { fetchGitDateTag, fetchSemverTag } from "./versioning.command.ts";
+import { ReleaseType } from "@std/semver/types";
 
 const writeFile = (file: string, content: string) =>
   Deno.writeTextFile(file, content + "\n", { append: true, create: true });
@@ -14,7 +15,7 @@ export const releaseCommand: CliCommand<{
   changelog: string;
   publish: boolean;
   with: string;
-  increment: string;
+  increment: ReleaseType;
   length: number;
 }> = async (args) => {
   const cwd = getCwd(args.cwd);

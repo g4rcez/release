@@ -57,8 +57,8 @@ export const gitDateCommand: CliCommand<{
 };
 
 export const fetchSemverTag = async (
-  incrementType: ReleaseType,
   cwd: string,
+  incrementType: ReleaseType,
 ) => {
   const git = new Git(cwd);
   const [latest] = await git.tags(1);
