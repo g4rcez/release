@@ -54,7 +54,7 @@ export const releaseCommand: CliCommand<{
   const commits = await git.getCommits(latest, release.tag);
   console.log(`From: ${latest} | To: ${release.tag}`);
   for (let i = 0; i < commits.length; i += 1) {
-    const commit = git.commit(commit[i]);
+    const commit = git.commit(commits[i]);
     const hash = commit.hash.slice(0, 7);
     const author = await commit.author();
     const message = await commit.message();
