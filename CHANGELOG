@@ -541,3 +541,735 @@ feat: add commit logs
 
 
 
+# v0.1.2
+
+Date: 2025-06-12T03:17:19.618Z
+Author: g4rcez
+
+## 01d88b
+Date: 2025-06-12T00:16:53-03:00
+Author: @g4rcez
+Commit: 01d88b47e15fb5e586156716a759dfe7d5947dc9
+refactor(commands): improve type safety for release increment parameter
+
+
+## cd2db0
+Date: 2025-06-12T00:16:53-03:00
+Author: @g4rcez
+Commit: cd2db0a5cdec8037e8debe4723f6450337ad8c80
+feat(release): add semver versioning support to release command
+
+
+## d4763a
+Date: 2025-06-12T00:16:09-03:00
+Author: @g4rcez
+Commit: d4763ad7a0d1994b95a1724b5c0686a9ceb27580
+feat: release: add semver versioning support to release command
+
+
+## a3f708
+Date: 2025-06-12T00:00:08-03:00
+Author: @g4rcez
+Commit: a3f708156ae69db5c017d8da7b26db93b3069968
+fix
+
+
+## a6388d
+Date: 2025-06-11T23:59:37-03:00
+Author: @g4rcez
+Commit: a6388d4bb6134f89b570e503a2d552521aea2f85
+feat: add operation logs
+
+
+## 84eefe
+Date: 2025-06-11T23:55:49-03:00
+Author: @g4rcez
+Commit: 84eefe7c2a64a5a49d428cef347b2861824b8c12
+docs(2025.06.11.5ca94e5): CHANGELOG
+
+
+## 5ca94e
+Date: 2025-06-11T23:55:35-03:00
+Author: @g4rcez
+Commit: 5ca94e5b997186a3840192c8c26ecb5ce01c6ee3
+fix: CHANGELOG format
+
+
+## 6eccff
+Date: 2025-06-11T23:53:48-03:00
+Author: @g4rcez
+Commit: 6eccff2f78c43d17440823143478490bcf83a227
+docs(2025.06.11.cd8e2b2): CHANGELOG
+
+
+## cd8e2b
+Date: 2025-06-11T23:53:31-03:00
+Author: @g4rcez
+Commit: cd8e2b2951ab71345448e8b66f6082ef16d2a913
+fix
+
+
+## f6040c
+Date: 2025-06-10T10:09:38-03:00
+Author: @g4rcez
+Commit: f6040c73cd27f63a8e37248f4597ee12031cd6e6
+docs(2025.06.10.6f49c41): CHANGELOG
+
+
+## 6f49c4
+Date: 2025-06-10T10:08:57-03:00
+Author: @g4rcez
+Commit: 6f49c41134eed543ae93c6eb34e46d35f9d63d54
+fix: format changelog file
+
+
+## 421db1
+Date: 2025-06-10T10:07:23-03:00
+Author: @g4rcez
+Commit: 421db11ea986a691cdcf7b723b6886f95b921766
+docs(2025.06.10.6076ffd): CHANGELOG
+
+
+## 6076ff
+Date: 2025-06-10T10:07:15-03:00
+Author: @g4rcez
+Commit: 6076ffd870f2b4ea714b3588d60aa50bfdcf4c8d
+fix: remove console.log
+
+
+## 040864
+Date: 2025-06-10T10:01:53-03:00
+Author: @g4rcez
+Commit: 04086465ea35b1ff10f0c93c7eaca19e4950f144
+docs(2025.06.10.98f0e54): CHANGELOG
+
+
+## 98f0e5
+Date: 2025-06-10T10:01:11-03:00
+Author: @g4rcez
+Commit: 98f0e54b84c8c274e393ce65619559e7f2e27861
+fix: git history clean
+
+
+## 7ff167
+Date: 2025-06-10T10:00:39-03:00
+Author: @g4rcez
+Commit: 7ff1678f5cb0bbaec65cb1cce92b76c49b6f2a18
+docs(2025.06.10.8f70862): CHANGELOG
+
+
+## 8f7086
+Date: 2025-06-10T09:59:57-03:00
+Author: @g4rcez
+Commit: 8f70862e3ed203c35da94b82fe29192c8e646c55
+docs(2025.06.10.53cc48b): CHANGELOG
+
+
+## 53cc48
+Date: 2025-06-10T09:59:51-03:00
+Author: @g4rcez
+Commit: 53cc48b27037a47ff3db0fbeb60ae7d1fe9715cd
+fix: git history clean
+
+
+## 4b403c
+Date: 2025-06-10T09:44:56-03:00
+Author: @g4rcez
+Commit: 4b403c4dc46572a38f6fc7dad6fa237e9754e8bf
+fix: git history clean
+
+
+## 7c7b62
+Date: 2025-06-10T09:31:38-03:00
+Author: @g4rcez
+Commit: 7c7b62807edf567c166f09282a91791f246a3e7a
+fix: git history clean
+
+
+## a92733
+Date: 2025-06-10T09:31:07-03:00
+Author: @g4rcez
+Commit: a92733825413d6a860f0fa9ee0eb531541478a26
+fix: git history clean
+
+
+## 58931a
+Date: 2025-06-10T09:27:47-03:00
+Author: @g4rcez
+Commit: 58931a961325c9f9eb9dac7dd104bab283f7defb
+fix: git history clean
+
+
+## dbc8d1
+Date: 2025-06-10T09:26:54-03:00
+Author: @g4rcez
+Commit: dbc8d1c0cfcd6a2f8e62b5cff30b7243456a959f
+fix: git history clean
+
+
+## 704222
+Date: 2025-06-10T09:25:36-03:00
+Author: @g4rcez
+Commit: 704222571c79ab920073e0fec8654832cd4630ac
+feat(release): improve changelog generation and tag handling
+
+
+## 14a6cb
+Date: 2025-06-09T17:20:07-03:00
+Author: @g4rcez
+Commit: 14a6cb521a7bfb5889ab0073793de007182c4a6c
+refactor(release): improve release file handling and add changelog option
+
+
+## c7ba18
+Date: 2025-06-09T17:15:33-03:00
+Author: @g4rcez
+Commit: c7ba186d5f37a22d273336c2868e04eaff51ab2a
+refactor(release): restructure release command and add git date versioning
+
+
+--
+# 2025.06.12.a3f7081
+
+Date: 2025-06-12T03:00:14.298Z
+Author: g4rcez
+
+## a3f708
+Date: 2025-06-12T00:00:08-03:00
+Author: @g4rcez
+Commit: a3f708156ae69db5c017d8da7b26db93b3069968
+fix
+
+
+## a6388d
+Date: 2025-06-11T23:59:37-03:00
+Author: @g4rcez
+Commit: a6388d4bb6134f89b570e503a2d552521aea2f85
+feat: add operation logs
+
+
+## 84eefe
+Date: 2025-06-11T23:55:49-03:00
+Author: @g4rcez
+Commit: 84eefe7c2a64a5a49d428cef347b2861824b8c12
+docs(2025.06.11.5ca94e5): CHANGELOG
+
+
+## 5ca94e
+Date: 2025-06-11T23:55:35-03:00
+Author: @g4rcez
+Commit: 5ca94e5b997186a3840192c8c26ecb5ce01c6ee3
+fix: CHANGELOG format
+
+
+## 6eccff
+Date: 2025-06-11T23:53:48-03:00
+Author: @g4rcez
+Commit: 6eccff2f78c43d17440823143478490bcf83a227
+docs(2025.06.11.cd8e2b2): CHANGELOG
+
+
+## cd8e2b
+Date: 2025-06-11T23:53:31-03:00
+Author: @g4rcez
+Commit: cd8e2b2951ab71345448e8b66f6082ef16d2a913
+fix
+
+
+## f6040c
+Date: 2025-06-10T10:09:38-03:00
+Author: @g4rcez
+Commit: f6040c73cd27f63a8e37248f4597ee12031cd6e6
+docs(2025.06.10.6f49c41): CHANGELOG
+
+
+## 6f49c4
+Date: 2025-06-10T10:08:57-03:00
+Author: @g4rcez
+Commit: 6f49c41134eed543ae93c6eb34e46d35f9d63d54
+fix: format changelog file
+
+
+## 421db1
+Date: 2025-06-10T10:07:23-03:00
+Author: @g4rcez
+Commit: 421db11ea986a691cdcf7b723b6886f95b921766
+docs(2025.06.10.6076ffd): CHANGELOG
+
+
+## 6076ff
+Date: 2025-06-10T10:07:15-03:00
+Author: @g4rcez
+Commit: 6076ffd870f2b4ea714b3588d60aa50bfdcf4c8d
+fix: remove console.log
+
+
+## 040864
+Date: 2025-06-10T10:01:53-03:00
+Author: @g4rcez
+Commit: 04086465ea35b1ff10f0c93c7eaca19e4950f144
+docs(2025.06.10.98f0e54): CHANGELOG
+
+
+## 98f0e5
+Date: 2025-06-10T10:01:11-03:00
+Author: @g4rcez
+Commit: 98f0e54b84c8c274e393ce65619559e7f2e27861
+fix: git history clean
+
+
+## 7ff167
+Date: 2025-06-10T10:00:39-03:00
+Author: @g4rcez
+Commit: 7ff1678f5cb0bbaec65cb1cce92b76c49b6f2a18
+docs(2025.06.10.8f70862): CHANGELOG
+
+
+## 8f7086
+Date: 2025-06-10T09:59:57-03:00
+Author: @g4rcez
+Commit: 8f70862e3ed203c35da94b82fe29192c8e646c55
+docs(2025.06.10.53cc48b): CHANGELOG
+
+
+## 53cc48
+Date: 2025-06-10T09:59:51-03:00
+Author: @g4rcez
+Commit: 53cc48b27037a47ff3db0fbeb60ae7d1fe9715cd
+fix: git history clean
+
+
+## 4b403c
+Date: 2025-06-10T09:44:56-03:00
+Author: @g4rcez
+Commit: 4b403c4dc46572a38f6fc7dad6fa237e9754e8bf
+fix: git history clean
+
+
+## 7c7b62
+Date: 2025-06-10T09:31:38-03:00
+Author: @g4rcez
+Commit: 7c7b62807edf567c166f09282a91791f246a3e7a
+fix: git history clean
+
+
+## a92733
+Date: 2025-06-10T09:31:07-03:00
+Author: @g4rcez
+Commit: a92733825413d6a860f0fa9ee0eb531541478a26
+fix: git history clean
+
+
+## 58931a
+Date: 2025-06-10T09:27:47-03:00
+Author: @g4rcez
+Commit: 58931a961325c9f9eb9dac7dd104bab283f7defb
+fix: git history clean
+
+
+## dbc8d1
+Date: 2025-06-10T09:26:54-03:00
+Author: @g4rcez
+Commit: dbc8d1c0cfcd6a2f8e62b5cff30b7243456a959f
+fix: git history clean
+
+
+## 704222
+Date: 2025-06-10T09:25:36-03:00
+Author: @g4rcez
+Commit: 704222571c79ab920073e0fec8654832cd4630ac
+feat(release): improve changelog generation and tag handling
+
+
+## 14a6cb
+Date: 2025-06-09T17:20:07-03:00
+Author: @g4rcez
+Commit: 14a6cb521a7bfb5889ab0073793de007182c4a6c
+refactor(release): improve release file handling and add changelog option
+
+
+## c7ba18
+Date: 2025-06-09T17:15:33-03:00
+Author: @g4rcez
+Commit: c7ba186d5f37a22d273336c2868e04eaff51ab2a
+refactor(release): restructure release command and add git date versioning
+
+
+## c44784
+Date: 2025-04-23T23:47:28-03:00
+Author: @g4rcez
+Commit: c44784207d5cd9f0b64e76be211af7f2f3cf7a13
+feat: add commit logs
+
+
+
+--
+
+
+# 2025.06.12.210fa9f
+
+Date: 2025-06-12T03:15:23.160Z
+Author: g4rcez
+
+## 210fa9
+Date: 2025-06-12T00:15:06-03:00
+Author: @g4rcez
+Commit: 210fa9fbb531dbe3e28e21b110d82681efaf54a7
+refactor(commands): improve type safety for release increment parameter
+
+
+## 81f53c
+Date: 2025-06-12T00:10:06-03:00
+Author: @g4rcez
+Commit: 81f53ca1a59a62d20114105067aa621bdeccdb9e
+feat(release): add semver versioning support to release command
+
+
+## beb1a7
+Date: 2025-06-12T00:00:16-03:00
+Author: @g4rcez
+Commit: beb1a7c29abba1e7edc80130cd18b14f3d1b301b
+docs(2025.06.12.a3f7081): CHANGELOG
+
+
+## a3f708
+Date: 2025-06-12T00:00:08-03:00
+Author: @g4rcez
+Commit: a3f708156ae69db5c017d8da7b26db93b3069968
+fix
+
+
+## a6388d
+Date: 2025-06-11T23:59:37-03:00
+Author: @g4rcez
+Commit: a6388d4bb6134f89b570e503a2d552521aea2f85
+feat: add operation logs
+
+
+## 84eefe
+Date: 2025-06-11T23:55:49-03:00
+Author: @g4rcez
+Commit: 84eefe7c2a64a5a49d428cef347b2861824b8c12
+docs(2025.06.11.5ca94e5): CHANGELOG
+
+
+## 5ca94e
+Date: 2025-06-11T23:55:35-03:00
+Author: @g4rcez
+Commit: 5ca94e5b997186a3840192c8c26ecb5ce01c6ee3
+fix: CHANGELOG format
+
+
+## 6eccff
+Date: 2025-06-11T23:53:48-03:00
+Author: @g4rcez
+Commit: 6eccff2f78c43d17440823143478490bcf83a227
+docs(2025.06.11.cd8e2b2): CHANGELOG
+
+
+## cd8e2b
+Date: 2025-06-11T23:53:31-03:00
+Author: @g4rcez
+Commit: cd8e2b2951ab71345448e8b66f6082ef16d2a913
+fix
+
+
+## f6040c
+Date: 2025-06-10T10:09:38-03:00
+Author: @g4rcez
+Commit: f6040c73cd27f63a8e37248f4597ee12031cd6e6
+docs(2025.06.10.6f49c41): CHANGELOG
+
+
+## 6f49c4
+Date: 2025-06-10T10:08:57-03:00
+Author: @g4rcez
+Commit: 6f49c41134eed543ae93c6eb34e46d35f9d63d54
+fix: format changelog file
+
+
+## 421db1
+Date: 2025-06-10T10:07:23-03:00
+Author: @g4rcez
+Commit: 421db11ea986a691cdcf7b723b6886f95b921766
+docs(2025.06.10.6076ffd): CHANGELOG
+
+
+## 6076ff
+Date: 2025-06-10T10:07:15-03:00
+Author: @g4rcez
+Commit: 6076ffd870f2b4ea714b3588d60aa50bfdcf4c8d
+fix: remove console.log
+
+
+## 040864
+Date: 2025-06-10T10:01:53-03:00
+Author: @g4rcez
+Commit: 04086465ea35b1ff10f0c93c7eaca19e4950f144
+docs(2025.06.10.98f0e54): CHANGELOG
+
+
+## 98f0e5
+Date: 2025-06-10T10:01:11-03:00
+Author: @g4rcez
+Commit: 98f0e54b84c8c274e393ce65619559e7f2e27861
+fix: git history clean
+
+
+## 7ff167
+Date: 2025-06-10T10:00:39-03:00
+Author: @g4rcez
+Commit: 7ff1678f5cb0bbaec65cb1cce92b76c49b6f2a18
+docs(2025.06.10.8f70862): CHANGELOG
+
+
+## 8f7086
+Date: 2025-06-10T09:59:57-03:00
+Author: @g4rcez
+Commit: 8f70862e3ed203c35da94b82fe29192c8e646c55
+docs(2025.06.10.53cc48b): CHANGELOG
+
+
+## 53cc48
+Date: 2025-06-10T09:59:51-03:00
+Author: @g4rcez
+Commit: 53cc48b27037a47ff3db0fbeb60ae7d1fe9715cd
+fix: git history clean
+
+
+## 4b403c
+Date: 2025-06-10T09:44:56-03:00
+Author: @g4rcez
+Commit: 4b403c4dc46572a38f6fc7dad6fa237e9754e8bf
+fix: git history clean
+
+
+## 7c7b62
+Date: 2025-06-10T09:31:38-03:00
+Author: @g4rcez
+Commit: 7c7b62807edf567c166f09282a91791f246a3e7a
+fix: git history clean
+
+
+## a92733
+Date: 2025-06-10T09:31:07-03:00
+Author: @g4rcez
+Commit: a92733825413d6a860f0fa9ee0eb531541478a26
+fix: git history clean
+
+
+## 58931a
+Date: 2025-06-10T09:27:47-03:00
+Author: @g4rcez
+Commit: 58931a961325c9f9eb9dac7dd104bab283f7defb
+fix: git history clean
+
+
+## dbc8d1
+Date: 2025-06-10T09:26:54-03:00
+Author: @g4rcez
+Commit: dbc8d1c0cfcd6a2f8e62b5cff30b7243456a959f
+fix: git history clean
+
+
+## 704222
+Date: 2025-06-10T09:25:36-03:00
+Author: @g4rcez
+Commit: 704222571c79ab920073e0fec8654832cd4630ac
+feat(release): improve changelog generation and tag handling
+
+
+## 14a6cb
+Date: 2025-06-09T17:20:07-03:00
+Author: @g4rcez
+Commit: 14a6cb521a7bfb5889ab0073793de007182c4a6c
+refactor(release): improve release file handling and add changelog option
+
+
+## c7ba18
+Date: 2025-06-09T17:15:33-03:00
+Author: @g4rcez
+Commit: c7ba186d5f37a22d273336c2868e04eaff51ab2a
+refactor(release): restructure release command and add git date versioning
+
+
+--
+# 2025.06.12.a3f7081
+
+Date: 2025-06-12T03:00:14.298Z
+Author: g4rcez
+
+## a3f708
+Date: 2025-06-12T00:00:08-03:00
+Author: @g4rcez
+Commit: a3f708156ae69db5c017d8da7b26db93b3069968
+fix
+
+
+## a6388d
+Date: 2025-06-11T23:59:37-03:00
+Author: @g4rcez
+Commit: a6388d4bb6134f89b570e503a2d552521aea2f85
+feat: add operation logs
+
+
+## 84eefe
+Date: 2025-06-11T23:55:49-03:00
+Author: @g4rcez
+Commit: 84eefe7c2a64a5a49d428cef347b2861824b8c12
+docs(2025.06.11.5ca94e5): CHANGELOG
+
+
+## 5ca94e
+Date: 2025-06-11T23:55:35-03:00
+Author: @g4rcez
+Commit: 5ca94e5b997186a3840192c8c26ecb5ce01c6ee3
+fix: CHANGELOG format
+
+
+## 6eccff
+Date: 2025-06-11T23:53:48-03:00
+Author: @g4rcez
+Commit: 6eccff2f78c43d17440823143478490bcf83a227
+docs(2025.06.11.cd8e2b2): CHANGELOG
+
+
+## cd8e2b
+Date: 2025-06-11T23:53:31-03:00
+Author: @g4rcez
+Commit: cd8e2b2951ab71345448e8b66f6082ef16d2a913
+fix
+
+
+## f6040c
+Date: 2025-06-10T10:09:38-03:00
+Author: @g4rcez
+Commit: f6040c73cd27f63a8e37248f4597ee12031cd6e6
+docs(2025.06.10.6f49c41): CHANGELOG
+
+
+## 6f49c4
+Date: 2025-06-10T10:08:57-03:00
+Author: @g4rcez
+Commit: 6f49c41134eed543ae93c6eb34e46d35f9d63d54
+fix: format changelog file
+
+
+## 421db1
+Date: 2025-06-10T10:07:23-03:00
+Author: @g4rcez
+Commit: 421db11ea986a691cdcf7b723b6886f95b921766
+docs(2025.06.10.6076ffd): CHANGELOG
+
+
+## 6076ff
+Date: 2025-06-10T10:07:15-03:00
+Author: @g4rcez
+Commit: 6076ffd870f2b4ea714b3588d60aa50bfdcf4c8d
+fix: remove console.log
+
+
+## 040864
+Date: 2025-06-10T10:01:53-03:00
+Author: @g4rcez
+Commit: 04086465ea35b1ff10f0c93c7eaca19e4950f144
+docs(2025.06.10.98f0e54): CHANGELOG
+
+
+## 98f0e5
+Date: 2025-06-10T10:01:11-03:00
+Author: @g4rcez
+Commit: 98f0e54b84c8c274e393ce65619559e7f2e27861
+fix: git history clean
+
+
+## 7ff167
+Date: 2025-06-10T10:00:39-03:00
+Author: @g4rcez
+Commit: 7ff1678f5cb0bbaec65cb1cce92b76c49b6f2a18
+docs(2025.06.10.8f70862): CHANGELOG
+
+
+## 8f7086
+Date: 2025-06-10T09:59:57-03:00
+Author: @g4rcez
+Commit: 8f70862e3ed203c35da94b82fe29192c8e646c55
+docs(2025.06.10.53cc48b): CHANGELOG
+
+
+## 53cc48
+Date: 2025-06-10T09:59:51-03:00
+Author: @g4rcez
+Commit: 53cc48b27037a47ff3db0fbeb60ae7d1fe9715cd
+fix: git history clean
+
+
+## 4b403c
+Date: 2025-06-10T09:44:56-03:00
+Author: @g4rcez
+Commit: 4b403c4dc46572a38f6fc7dad6fa237e9754e8bf
+fix: git history clean
+
+
+## 7c7b62
+Date: 2025-06-10T09:31:38-03:00
+Author: @g4rcez
+Commit: 7c7b62807edf567c166f09282a91791f246a3e7a
+fix: git history clean
+
+
+## a92733
+Date: 2025-06-10T09:31:07-03:00
+Author: @g4rcez
+Commit: a92733825413d6a860f0fa9ee0eb531541478a26
+fix: git history clean
+
+
+## 58931a
+Date: 2025-06-10T09:27:47-03:00
+Author: @g4rcez
+Commit: 58931a961325c9f9eb9dac7dd104bab283f7defb
+fix: git history clean
+
+
+## dbc8d1
+Date: 2025-06-10T09:26:54-03:00
+Author: @g4rcez
+Commit: dbc8d1c0cfcd6a2f8e62b5cff30b7243456a959f
+fix: git history clean
+
+
+## 704222
+Date: 2025-06-10T09:25:36-03:00
+Author: @g4rcez
+Commit: 704222571c79ab920073e0fec8654832cd4630ac
+feat(release): improve changelog generation and tag handling
+
+
+## 14a6cb
+Date: 2025-06-09T17:20:07-03:00
+Author: @g4rcez
+Commit: 14a6cb521a7bfb5889ab0073793de007182c4a6c
+refactor(release): improve release file handling and add changelog option
+
+
+## c7ba18
+Date: 2025-06-09T17:15:33-03:00
+Author: @g4rcez
+Commit: c7ba186d5f37a22d273336c2868e04eaff51ab2a
+refactor(release): restructure release command and add git date versioning
+
+
+## c44784
+Date: 2025-04-23T23:47:28-03:00
+Author: @g4rcez
+Commit: c44784207d5cd9f0b64e76be211af7f2f3cf7a13
+feat: add commit logs
+
+
+
+--
+
+
+
+
