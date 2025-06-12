@@ -6,8 +6,7 @@ import { GithubCli } from "../lib/github-cli.ts";
 import { getCwd } from "../lib/os.ts";
 import { fetchGitDateTag } from "./versioning.command.ts";
 
-const writeFile = (file: string, content: string) =>
-  Deno.writeTextFile(file, content + "\n", { append: true, create: true });
+const writeFile = (file: string, content: string) => Deno.writeTextFile(file, content + "\n", { append: true, create: true });
 
 export const releaseCommand: CliCommand<{
   cwd: string;
@@ -32,7 +31,8 @@ export const releaseCommand: CliCommand<{
   const now = new Date();
   const author = await git.getConfigAuthor();
 
-  const [_, previous] = await git.tags(2);
+  const [latest] = await git.tags(1);
+  console.log(`Latest tag: ${latest}`);
 
   const release = await fetchGitDateTag(cwd, args.length);
 
@@ -45,7 +45,8 @@ export const releaseCommand: CliCommand<{
   const releaseFileContent = lines.join("\n");
   await release.create();
 
-  const commits = await git.getCommits(previous, release.tag);
+  const commits = await git.getCommits(latest, release.tag);
+  console.log(`Getting commits...${latest}..${release.tag}`)
   for (let i = 0; i < commits.length; i += 1) {
     const commit = git.commit(commits[i]);
     const author = await commit.author();
@@ -56,14 +57,14 @@ export const releaseCommand: CliCommand<{
     lines.push(`Author: @${author}`);
     lines.push(`Commit: ${commit.hash}`);
     lines.push(message);
-    lines.push("\n")
+    lines.push("\n");
   }
   await writeFile(
     CHANGELOG,
-    [...lines, "\n--\n", changelogFileContent].join("\n"),
+    [...lines, "--", changelogFileContent].join("\n"),
   );
   await git.add(".");
-  const changelogCommit = `docs(${release.tag}): CHANGELOG`
+  const changelogCommit = `docs(${release.tag}): CHANGELOG`;
   await git.createCommit("-m", changelogCommit);
   await git.push("origin", "");
   console.log(changelogCommit);
@@ -72,5 +73,5 @@ export const releaseCommand: CliCommand<{
   await writeFile(tempFile, releaseFileContent);
   await gh.release(release.tag, tempFile);
   console.log(`Git tag ${release.tag} was released.`);
-  console.log(release.tag)
+  console.log(release.tag);
 };
