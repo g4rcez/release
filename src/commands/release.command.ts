@@ -32,7 +32,7 @@ export const releaseCommand: CliCommand<{
   const now = new Date();
   const author = await git.getConfigAuthor();
 
-  const [beforeChangelog, previous] = await git.tags(2);
+  const [_, previous] = await git.tags(2);
 
   const release = await fetchGitDateTag(cwd, args.length);
 
@@ -45,13 +45,12 @@ export const releaseCommand: CliCommand<{
   const releaseFileContent = lines.join("\n");
   await release.create();
 
-  const commits = await git.getCommits(previous, beforeChangelog);
+  const commits = await git.getCommits(previous, release.tag);
   for (let i = 0; i < commits.length; i += 1) {
     const commit = git.commit(commits[i]);
     const author = await commit.author();
     const message = await commit.message();
     const timestamps = await commit.timestamps();
-    lines.push("\n")
     lines.push(`## ${commit.hash.slice(0, 6)}`);
     lines.push(`Date: ${timestamps}`);
     lines.push(`Author: @${author}`);
