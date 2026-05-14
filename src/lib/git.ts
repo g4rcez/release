@@ -1,8 +1,10 @@
 import { run } from "./os.ts";
 
 class Commit {
-  constructor(public readonly hash: string, public readonly cwd: string) {
-  }
+  constructor(
+    public readonly hash: string,
+    public readonly cwd: string,
+  ) {}
 
   public author() {
     return run(this.cwd, ["git", "show", "-s", "--format=%an", this.hash]);
@@ -21,12 +23,7 @@ export class Git {
   public constructor(public readonly cwd: string) {}
 
   public async lastCommit() {
-    const tags = await run(this.cwd, [
-      "git",
-      "log",
-      "-1",
-      "--pretty=%H",
-    ]);
+    const tags = await run(this.cwd, ["git", "log", "-1", "--pretty=%H"]);
     return tags.split("\n").map((x) => x.trim());
   }
 
@@ -38,14 +35,20 @@ export class Git {
       "--format=%(refname:short)",
       "refs/tags",
     ]);
-    return tags.split("\n").slice(0, slice).map((x) => x.trim());
+    return tags
+      .split("\n")
+      .slice(0, slice)
+      .map((x) => x.trim());
   }
 
   public getConfigAuthor() {
     return run(this.cwd, ["git", "config", "user.name"]);
   }
 
-  public async getCommits(previous: string, current: string): Promise<string[]> {
+  public async getCommits(
+    previous: string,
+    current: string,
+  ): Promise<string[]> {
     try {
       const commits = await run(this.cwd, [
         "git",
@@ -70,7 +73,10 @@ export class Git {
 
   public async push(origin: string, remote: string) {
     try {
-      const result = await run(this.cwd, ["git", "push", origin, remote].filter(Boolean));
+      const result = await run(
+        this.cwd,
+        ["git", "push", origin, remote].filter(Boolean),
+      );
       return result;
     } catch (error) {
       console.error(error);
@@ -90,11 +96,7 @@ export class Git {
 
   public async hasChanges() {
     try {
-      const result = await run(this.cwd, [
-        "git",
-        "status",
-        "--porcelain",
-      ]);
+      const result = await run(this.cwd, ["git", "status", "--porcelain"]);
       return result !== "";
     } catch (error) {
       console.error(error);

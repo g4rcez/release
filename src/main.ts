@@ -25,8 +25,7 @@ async function main() {
       default: "gitdate",
     })
     .command("new", releaseCommand, {
-      description:
-        "Generate changelog file and publish release (alias for deploy)",
+      description: "Generate changelog file and publish release (alias for deploy)",
     })
     .command("tag", latestTagCommand, {
       description: "Get the latest tag of a git repository",

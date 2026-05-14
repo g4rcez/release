@@ -7,8 +7,7 @@ import { getCwd } from "../lib/os.ts";
 import { fetchGitDateTag, fetchSemverTag } from "./versioning.command.ts";
 import { ReleaseType } from "@std/semver/types";
 
-const writeFile = (file: string, content: string) =>
-  Deno.writeTextFile(file, content + "\n", { append: true, create: true });
+const writeFile = (file: string, content: string) => Deno.writeTextFile(file, content + "\n", { create: true });
 
 export const releaseCommand: CliCommand<{
   cwd: string;
@@ -19,17 +18,15 @@ export const releaseCommand: CliCommand<{
   length: number;
 }> = async (args) => {
   const cwd = getCwd(args.cwd);
-  const c = args.changelog || "";
-  const CHANGELOG = isAbsolute(c) ? c : resolve(join(cwd, c));
+  const c = args.changelog || "CHANGELOG";
+  const CHANGELOG_DIR = isAbsolute(c) ? c : resolve(join(cwd, c));
   const git = new Git(cwd);
 
-  const existFile = await exists(CHANGELOG);
-  if (!existFile) {
-    await Deno.writeFile(CHANGELOG, new TextEncoder().encode(""), {
-      createNew: true,
-    });
+  // Ensure CHANGELOG directory exists
+  const existDir = await exists(CHANGELOG_DIR);
+  if (!existDir) {
+    await Deno.mkdir(CHANGELOG_DIR, { recursive: true });
   }
-  const changelogFileContent = await Deno.readTextFile(CHANGELOG);
 
   const now = new Date();
   const author = await git.getConfigAuthor();
@@ -37,10 +34,7 @@ export const releaseCommand: CliCommand<{
   const [latest] = await git.tags(1);
   console.log(`Latest tag: ${latest}`);
 
-  const release =
-    args.with === "semver"
-      ? await fetchSemverTag(cwd, args.increment)
-      : await fetchGitDateTag(cwd, args.length);
+  const release = args.with === "semver" ? await fetchSemverTag(cwd, args.increment) : await fetchGitDateTag(cwd, args.length);
 
   const lines: string[] = [];
   lines.push(`# ${release.tag}\n`);
@@ -66,7 +60,11 @@ export const releaseCommand: CliCommand<{
     lines.push(message);
     lines.push("\n");
   }
-  await writeFile(CHANGELOG, [...lines, "--", changelogFileContent].join("\n"));
+
+  // Create individual version file
+  const versionFileName = `${release.tag}.md`;
+  const versionFilePath = join(CHANGELOG_DIR, versionFileName);
+  await writeFile(versionFilePath, lines.join("\n"));
   await git.add(".");
   const changelogCommit = `docs(${release.tag}): CHANGELOG`;
   await git.createCommit("-m", changelogCommit);

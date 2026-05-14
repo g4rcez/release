@@ -16,8 +16,8 @@ export type CliCommand<T extends Params> = (
 ) => Promise<any> | any;
 
 type Arg<T extends string> = T extends `${infer Long}|${infer Short}` ? (Long extends `--${infer Name}` ? Name
-  : Short extends `-${infer SName}` ? SName
-  : never)
+    : Short extends `-${infer SName}` ? SName
+    : never)
   : never;
 
 type MappedPrimitives = {
@@ -136,8 +136,8 @@ export class Cli<OwnArgs extends CliArgs, OwnCommands extends Record<string, Com
     }
     const command = this.commands.find((x) => x.name === argv[0]);
     if (command === undefined) {
-      this.help()
-      return { command: undefined, args: {} as any }
+      this.help();
+      return { command: undefined, args: {} as any };
     }
     return {
       command,
@@ -162,18 +162,35 @@ export class Cli<OwnArgs extends CliArgs, OwnCommands extends Record<string, Com
   private spaces = (" ").repeat(2);
 
   public help(error?: unknown) {
-    console.log(`%c\r${this.description}`, css`color: blue`);
+    console.log(
+      `%c\r${this.description}`,
+      css`
+        color: blue;
+      `,
+    );
     console.log(
       `\r\nUsage: ${this.name}${this.commands.length === 0 ? "" : " <command>"}${this.options.length === 0 ? "" : " [options]"}`,
     );
     if (this.commands.length > 0) {
-      console.log("\r\n%cCommands", css`text-decoration: underline;font-weight: bold`);
+      console.log(
+        "\r\n%cCommands",
+        css`
+          text-decoration: underline;
+          font-weight: bold;
+        `,
+      );
       this.commands.toSorted((a, b) => a.name.localeCompare(b.name)).forEach((x) => {
         console.log(`\r${this.spaces}${x.name}: ${x.opts?.description || "-"}`);
       });
     }
     if (this.options.length > 0) {
-      console.log("\r\n%cOptions", css`text-decoration: underline;font-weight: bold`);
+      console.log(
+        "\r\n%cOptions",
+        css`
+          text-decoration: underline;
+          font-weight: bold;
+        `,
+      );
       this.options.toSorted((a, b) => a.arg.localeCompare(b.arg)).forEach((x) => {
         const [first, rest] = x.arg.split(CMD_SEPARATOR);
         console.log(`\r${this.spaces}${first}, ${rest.split(" ")[0]}: ${x.description || "-"}`);
